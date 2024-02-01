@@ -4,6 +4,8 @@ const session = require("express-session")
 const cors = require("cors")
 const morgan = require("morgan")
 const app = express()
+const connectDB = require("./database/index")
+
 
 
 app.use(cors())
@@ -14,7 +16,7 @@ app.use(session({
 }));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
-app.use(morgan('tiny'))
+// app.use(morgan('tiny'))
 
 const favoriteRouter = require("./routes/favorite.router")
 const gamesRouter = require("./routes/games.router")
@@ -30,3 +32,9 @@ const PORT = process.env.DB_PORT || 5000
 app.listen(PORT, () => {
   console.log(`Il server è attivo alla porta ${PORT}`);
 })
+
+
+
+
+
+
