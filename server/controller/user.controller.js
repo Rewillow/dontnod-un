@@ -193,6 +193,7 @@ logout: async(req,res) => {
 //       console.error("Errore durante la verifica dell'accesso");
 //       res.status(401).json({ error: "Autenticazione non riuscita" });
 //     }
+
 //   }
 
 auth: async (req, res) => {
