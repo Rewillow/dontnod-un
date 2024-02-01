@@ -11,7 +11,11 @@ app.use(cors())
 app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+      sameSite: 'None',
+      secure: true,
+    }
 }));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
