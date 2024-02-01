@@ -5,25 +5,23 @@ const cors = require("cors")
 const morgan = require("morgan")
 const app = express()
 const connectDB = require("./database/index")
-
+const cookie = require("cookie-parser")
 
 app.use(cors())
 app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-      sameSite: 'None',
-      secure: true,
-    }
+    saveUninitialized: true
 }));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
+app.use(cookie())
 // app.use(morgan('tiny'))
 
 const favoriteRouter = require("./routes/favorite.router")
 const gamesRouter = require("./routes/games.router")
 const userRouter = require("./routes/user.router")
+
 
 
 app.use('/api', gamesRouter)
