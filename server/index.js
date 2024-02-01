@@ -7,7 +7,6 @@ const app = express()
 const connectDB = require("./database/index")
 
 
-
 app.use(cors())
 app.use(session({
     secret: process.env.JWT_SECRET,
