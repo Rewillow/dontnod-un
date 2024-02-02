@@ -30,8 +30,19 @@ singleUser: async(req,res) => {
         console.error(err);
     }
 },
-
-
+authUser: async(req,res) => {
+    const userId = req.params.userId
+    try {
+        const getUser = await User.findByPk(userId)
+        if (getUser) {
+            res.status(200).json({message: "Utente autenticato"})
+        } else {
+            res.status(404).json({message: "Utente non autenticato"})
+        }
+    } catch(err) {
+        console.error(err);
+    }
+},
 signup: async(req,res) => {
     const {username, email, password} = req.body
     try {
@@ -46,8 +57,8 @@ signup: async(req,res) => {
            process.env.JWT_SECRET
         );
         req.session.auth = true
-        res.header('Access-Control-Expose-Headers', 'token');
-        res.header('token', token);
+        // res.header('Access-Control-Expose-Headers', 'token');
+        // res.header('token', token);
         res.status(201).json({message: "Registrazione effettuata con successo", newUser, token})
     } catch(err) {
         console.error("Errore durante la creazione dell'utente");
@@ -67,8 +78,8 @@ login: async(req,res) => {
                     process.env.JWT_SECRET ,// segreto
                 );
                 req.session.auth = true
-                res.header('Access-Control-Expose-Headers', 'token');
-                res.header('token', token);
+                // res.header('Access-Control-Expose-Headers', 'token');
+                // res.header('token', token);
                 res.status(200).json({message:"Accesso effettuato", token})
             } else {
                 return res.status(401).json({message: "Dati non corretti"})
@@ -85,7 +96,6 @@ login: async(req,res) => {
 logout: async(req,res) => {
     req.session.auth = false
     try {
-        res.clearCookie("token")
         res.status(200).json({message: "Logout effettuato con successo"})
     } catch(err) {
         res.status(500).json({error: "Errore nella disconnessione"})

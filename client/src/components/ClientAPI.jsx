@@ -28,13 +28,19 @@ const ClientAPI = {
   user: async (userId) => {
     try {
       const response = await axios.get (`https://dontnod-server.vercel.app/api/user/${userId}`)
-      // console.log(response.data);
       return response
     } catch(err) {
       console.error();
     }
   },
-
+  authUser: async (userId) => {
+    try {
+      const response = await axios.get (`https://dontnod-server.vercel.app/api/auth/${userId}`)
+      return response
+    } catch(err) {
+      console.error();
+    }
+  },
   logout: async () => {
     return await axios.post('https://dontnod-server.vercel.app/api/logout')
     .then(response => {

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion' // Importo il componente per il funzionam
 import minigame from './miniGame'
 import ClientAPI from '../../components/ClientAPI'
 import { useEffect, useState } from 'react'
+import {jwtDecode} from "jwt-decode"
 
 const Minigames = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -12,16 +13,31 @@ const Minigames = () => {
       checkAuthentication();
   }, []);
 
+  // const checkAuthentication = async () => {
+  //   try {
+  //     const response = await ClientAPI.auth(); 
+  //     const responseData = response.data;
+  //     setMinigameMessage(responseData.message);
+  //     setAuthenticated(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const checkAuthentication = async () => {
     try {
-      const response = await ClientAPI.auth(); 
-      const responseData = response.data;
-      setMinigameMessage(responseData.message);
-      setAuthenticated(true);
-    } catch (error) {
-      console.error(error);
+      const token = localStorage.getItem('token')
+      const decode = jwtDecode(token)
+      const userId = decode.userId
+      const response = await ClientAPI.authUser(userId)
+      const message = response.data.message
+      if(message === "Utente autenticato") {
+        setAuthenticated(true)
+      }
+    } catch(err) {
+      console.error('Utente non autenticato', err);
     }
-  };
+  }
     
     return <>
     {authenticated ? (
