@@ -46,7 +46,7 @@ signup: async(req,res) => {
            process.env.JWT_SECRET,
            {expiresIn: '3h'}
         );
-        // res.cookie('token', token, {httpOnly: true});
+        res.cookie('token', token, { httpOnly: true, sameSite: 'strict'});
         req.session.auth = true
         res.status(201).json({message: "Registrazione effettuata con successo", newUser, token})
     } catch(err) {
@@ -67,10 +67,9 @@ login: async(req,res) => {
                     process.env.JWT_SECRET ,// segreto
                     {expiresIn: '3h'}
                 );
-                res.cookie('token', token, { httpOnly: true});
+                res.cookie('token', token, { httpOnly: true, sameSite: 'strict'});
                 req.session.auth = true
-                res.status(200).cookie('token', token, { httponly: true, domain: process.env.NODE_ENV === 'development' ? '.localhost' : '.domain.com' }).json();
-
+                res.status(200).json({message:"Accesso effettuato", token})
             } else {
                 return res.status(401).json({message: "Dati non corretti"})
             }
