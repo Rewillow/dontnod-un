@@ -92,10 +92,9 @@ logout: async(req,res) => {
 auth: async (req, res) => {
     try {
       const token = req.cookies.token; // Assume the token is stored in a cookie named 'token'
-      console.log(token);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       if (decoded) {
-        res.status(200).json({ message: "Accesso consentito all'area riservata" });
+        res.status(200).json({ message: "Accesso consentito all'area riservata", token });
       } else {
         res.status(401).json({ error: "Non autorizzato: effettua l'accesso" });
       }
