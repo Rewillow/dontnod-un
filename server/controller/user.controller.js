@@ -43,7 +43,8 @@ signup: async(req,res) => {
         // Crea un token JWT
         const token = jwt.sign(
             { userId: newUser.id }, // payload
-           process.env.JWT_SECRET
+           process.env.JWT_SECRET,
+           {expiresIn: '3h'}
         );
         req.session.auth = true
         res.cookie('token', token, { httpOnly: true, secure:true, sameSite: 'none' });
@@ -63,7 +64,8 @@ login: async(req,res) => {
                 // Crea un token JWT
                 const token = jwt.sign(
                     { userId: existingUser.id }, // payload
-                    process.env.JWT_SECRET // segreto
+                    process.env.JWT_SECRET ,// segreto
+                    {expiresIn: '3h'}
                 );
                 req.session.auth = true
                 res.cookie('token', token, { httpOnly: true, secure:true, sameSite: 'none' });
