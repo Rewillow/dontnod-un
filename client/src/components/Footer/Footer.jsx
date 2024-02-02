@@ -25,7 +25,7 @@ const Footer = () => {
         </div>
         </div>
         <div className='footer--copyright'>
-        <p style={{color: `white`, textAlign: `center`}}>© 2023, All rights reserved, DON'T NOD</p>
+        <p style={{color: `white`, textAlign: `center`}}>© 2024, All rights reserved DON'T NOD</p>
         </div>
         </footer>
     )

@@ -14,8 +14,7 @@ const Minigames = () => {
 
   const checkAuthentication = async () => {
     try {
-      // Chiama la nuova rotta 'restrictedArea'
-      const response = await ClientAPI.auth(); // Modifica qui la chiamata API
+      const response = await ClientAPI.auth(); 
       const responseData = response.data;
       setMinigameMessage(responseData.message);
       setAuthenticated(true);

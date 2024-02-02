@@ -46,7 +46,8 @@ signup: async(req,res) => {
            process.env.JWT_SECRET
         );
         req.session.auth = true
-        res.cookie('token', token, { httpOnly: true});
+        res.header('Access-Control-Expose-Headers', 'token');
+        res.header('token', token);
         res.status(201).json({message: "Registrazione effettuata con successo", newUser, token})
     } catch(err) {
         console.error("Errore durante la creazione dell'utente");
@@ -56,7 +57,7 @@ signup: async(req,res) => {
 login: async(req,res) => {
     const {email, password} = req.body
     try {
-        const existingUser = await User.findOne({where: {[Op.or]: [{ email },{ password }]}})
+        const existingUser = await User.findOne({where: {[Op.or]: [{ email }]}})
         if(existingUser) {
             const passwordMatch = await bcrypt.compare(password, existingUser.password)
             if (passwordMatch) {
@@ -66,7 +67,8 @@ login: async(req,res) => {
                     process.env.JWT_SECRET ,// segreto
                 );
                 req.session.auth = true
-                res.cookie('token', token, { httpOnly: true});
+                res.header('Access-Control-Expose-Headers', 'token');
+                res.header('token', token);
                 res.status(200).json({message:"Accesso effettuato", token})
             } else {
                 return res.status(401).json({message: "Dati non corretti"})
@@ -90,12 +92,25 @@ logout: async(req,res) => {
     }
 },
 
-auth: async (req, res) => {
+// auth: async (req, res) => {
+//     const token = req.headers.token; 
+//     try {
+//       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//       if (decoded) {
+//         res.status(200).json({ message: "Accesso consentito all'area riservata", token });
+//       } else {
+//         res.status(401).json({ error: "Non autorizzato: effettua l'accesso" });
+//       }
+//     } catch (err) {
+//       console.error("Errore durante l'accesso all'area riservata", err);
+//       res.status(500).json({ error: "Errore interno del server", err });
+//     }
+//   }
+auth: (req, res) => {
+    const isAuthenticated = req.session.auth;
     try {
-      const token = req.cookies.token; // Assume the token is stored in a cookie named 'token'
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if (decoded) {
-        res.status(200).json({ message: "Accesso consentito all'area riservata", token });
+      if (isAuthenticated) {
+        res.status(200).json({ message: "Accesso consentito all'area riservata" });
       } else {
         res.status(401).json({ error: "Non autorizzato: effettua l'accesso" });
       }
@@ -104,6 +119,7 @@ auth: async (req, res) => {
       res.status(500).json({ error: "Errore interno del server", err });
     }
   }
+  
 }
 
 module.exports = userController
