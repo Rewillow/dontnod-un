@@ -43,11 +43,10 @@ signup: async(req,res) => {
         // Crea un token JWT
         const token = jwt.sign(
             { userId: newUser.id }, // payload
-           process.env.JWT_SECRET,
-           {expiresIn: '3h'}
+           process.env.JWT_SECRET
         );
-        res.cookie('token', token, { httpOnly: true});
         req.session.auth = true
+        res.cookie('token', token, { httpOnly: true});
         res.status(201).json({message: "Registrazione effettuata con successo", newUser, token})
     } catch(err) {
         console.error("Errore durante la creazione dell'utente");
@@ -65,10 +64,9 @@ login: async(req,res) => {
                 const token = jwt.sign(
                     { userId: existingUser.id }, // payload
                     process.env.JWT_SECRET ,// segreto
-                    {expiresIn: '3h'}
                 );
-                res.cookie('token', token, { httpOnly: true});
                 req.session.auth = true
+                res.cookie('token', token, { httpOnly: true});
                 res.status(200).json({message:"Accesso effettuato", token})
             } else {
                 return res.status(401).json({message: "Dati non corretti"})
@@ -85,6 +83,7 @@ login: async(req,res) => {
 logout: async(req,res) => {
     req.session.auth = false
     try {
+        res.clearCookie("token")
         res.status(200).json({message: "Logout effettuato con successo"})
     } catch(err) {
         res.status(500).json({error: "Errore nella disconnessione"})
