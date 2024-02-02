@@ -83,8 +83,8 @@ const ClientAPI = {
     }
   },
 
-  auth: () => {
-    return axios.get('https://dontnod-server.vercel.app/api/auth')
+  auth: async () => {
+    return await axios.get('https://dontnod-server.vercel.app/api/auth')
   }
 };
 
