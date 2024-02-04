@@ -130,7 +130,7 @@ const Games = () => {
         {titles.map((title, index) => ( // Attraverso il metodo .map, richiamo ogni singolo elemento dell'array
         <section key={index} className='games--container--rm'>
         <div className='games--container--rm--img'>
-        <img src={title.image} className='remember--me' alt="Game Image" />
+        <a href={`/games/${title.path}`}><img src={title.image} className='remember--me' alt="Game Image" /></a>
         </div>
         <div className='games--container--rm--text'>
         <img src={title.logo} className='games--container--logo' alt='Logo Image' />
