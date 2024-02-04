@@ -1,5 +1,5 @@
 import { useParams} from "react-router-dom"; // Importo la funzione useParams 
-import { useState } from "react"; // Importo la funzione useState
+import { useEffect, useState } from "react"; // Importo la funzione useState
 import ReactPlayer from 'react-player' 
 
 import './SingleGame.css'
@@ -164,6 +164,17 @@ const watchVideo = () => { // Imposto il componente specificando il valore di "s
 const closeVideo = () => { // Imposto il componente specificando il valore di "setIsOpen" in modo tale da chiudere il video
   setIsOpen(false)
 }
+
+useEffect(() => {
+  if(isOpen) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'auto'
+  }
+  return () => {
+    document.body.style.overflow = 'auto';
+  };
+}, [isOpen])
 
 const playerConfig = {controls: ['play', 'progress', 'volume', 'fullscreen']} // Imposto, tramite la costante, quali controlli voglio visualizzare nel player di Youtube
 

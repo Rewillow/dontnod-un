@@ -36,7 +36,7 @@
     }
 
     .platform h1 {
-        font-size: 35px;
+        font-size: 40px;
     }
 
     .platform--icons {
@@ -46,11 +46,11 @@
     }
 
     .single--icon {
-        font-size: 60px;
+        font-size: 70px;
     }
 
-    .single--icon:hover {
-        font-size: 80px;
+    .single--icon:hover{
+        font-size: 70px;
     }
 }
 
@@ -62,12 +62,6 @@
 
     .platform h1 {
         font-size: 37px;
-    }
-
-    .platform--icons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        margin: auto;
     }
 
     .single--icon {
@@ -85,18 +79,12 @@
         margin-top: -10px;
     }
 
-    .platform--icons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        margin: auto;
-    }
-
     .single--icon {
         font-size: 95px;
     }
 
     .single--icon:hover {
-        font-size: 80px;
+        font-size: 95px;
     }
 }
 

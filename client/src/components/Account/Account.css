@@ -37,7 +37,7 @@
     }
 
     .account p {
-        width: 80%;
+        width: 90%;
         font-size: 13px;
     }
 
@@ -48,6 +48,6 @@
     .account input {
         max-width: 210px;
         margin-top: 5px;
-        font-size: 11px;
+        font-size: 12px;
     }
 }

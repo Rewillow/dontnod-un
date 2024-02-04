@@ -33,6 +33,7 @@ const ClientAPI = {
       console.error();
     }
   },
+  
   authUser: async (userId) => {
     try {
       const response = await axios.get (`https://dontnod-server.vercel.app/api/auth/${userId}`)
